@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web-API-Silicon", "Web-API-Silicon\Web-API-Silicon.csproj", "{705CC4A6-C21A-4C01-90D9-54DCAC4AE202}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{28EB28F1-F16F-4C42-A645-F3818CF1CA9C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{705CC4A6-C21A-4C01-90D9-54DCAC4AE202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{705CC4A6-C21A-4C01-90D9-54DCAC4AE202}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{705CC4A6-C21A-4C01-90D9-54DCAC4AE202}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{705CC4A6-C21A-4C01-90D9-54DCAC4AE202}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28EB28F1-F16F-4C42-A645-F3818CF1CA9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28EB28F1-F16F-4C42-A645-F3818CF1CA9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28EB28F1-F16F-4C42-A645-F3818CF1CA9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28EB28F1-F16F-4C42-A645-F3818CF1CA9C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {00888620-E15E-4A1E-9267-067984CE105B}
+	EndGlobalSection
+EndGlobal
