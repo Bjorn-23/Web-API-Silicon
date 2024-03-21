@@ -27,7 +27,6 @@ namespace Web_API_Silicon.Controllers
                     {
                         return Ok(SubscriptionFactory.Create(result));
                     }
-
                 }
                 return BadRequest();
             }

@@ -24,7 +24,7 @@ public class ReturnCourseDto
     public decimal? DiscountPrice { get; set; }
 
     [Required]
-    public string LengthInHours { get; set; } = null!;
+    public string Length { get; set; } = null!;
 
     public string? Rating { get; set; }
 }

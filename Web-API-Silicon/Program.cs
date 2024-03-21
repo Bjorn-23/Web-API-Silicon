@@ -2,9 +2,7 @@ using Infrastructure.Context;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
-using Web_API_Silicon.Filters;
 
 
 var builder = WebApplication.CreateBuilder(args);

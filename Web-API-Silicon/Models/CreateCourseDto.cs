@@ -10,6 +10,7 @@ public class CreateCourseDto
     [Required]
     public string Author { get; set; } = null!;
 
+
     public bool BestSeller { get; set; } = false;
 
     [Required]
@@ -22,6 +23,7 @@ public class CreateCourseDto
 
     [Required]
     public string LengthInHours { get; set; } = null!;
-    
-    public string? Rating { get; set; }
+
+    [Required]
+    public string Rating { get; set; } = null!;
 }

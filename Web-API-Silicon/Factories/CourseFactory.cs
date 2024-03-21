@@ -33,7 +33,7 @@ public class CourseFactory
             Currency = dto.Currency,
             Price = dto.Price,
             DiscountPrice = dto.DiscountPrice,
-            LengthInHours = dto.LengthInHours,
+            LengthInHours = dto.Length,
             Rating = dto.Rating,
         };
 
@@ -51,7 +51,7 @@ public class CourseFactory
             Currency = entity.Currency,
             Price = entity.Price,
             DiscountPrice = entity.DiscountPrice,
-            LengthInHours = entity.LengthInHours,
+            Length = entity.LengthInHours,
             Rating = entity.Rating,
         };
 
@@ -73,7 +73,7 @@ public class CourseFactory
                 Currency = entity.Currency,
                 Price = entity.Price,
                 DiscountPrice = entity.DiscountPrice,
-                LengthInHours = entity.LengthInHours,
+                Length = entity.LengthInHours,
                 Rating = entity.Rating,
             });
         }
