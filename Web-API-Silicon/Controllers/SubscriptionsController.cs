@@ -22,7 +22,7 @@ namespace Web_API_Silicon.Controllers
             {
                 if (subscriber != null)
                 {
-                    var result = await _subscriptionService.CreateOrUpdateSubscription(SubscriptionFactory.Create(subscriber));
+                    var result = await _subscriptionService.CreateOrUpdateSubscriptionAsync(SubscriptionFactory.Create(subscriber));
                     if (result != null)
                     {
                         return Ok(SubscriptionFactory.Create(result));

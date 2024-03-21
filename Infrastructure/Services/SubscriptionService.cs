@@ -8,7 +8,7 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
 {
     private readonly SubscriptionRepository _repository = subscriptionRepository;
 
-    public async Task<SubscriptionEntity> CreateOrUpdateSubscription(SubscriptionEntity subscription)
+    public async Task<SubscriptionEntity> CreateOrUpdateSubscriptionAsync(SubscriptionEntity subscription)
     {
         try
         {
@@ -30,8 +30,6 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
                     return result;
                 }
             }
-
-            return null!;
         }
         catch (Exception ex) { Debug.WriteLine(ex); }
         return null!;
@@ -47,8 +45,6 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
             {
                 return subscription;
             }
-
-            return null!;
         }
         catch (Exception ex) { Debug.WriteLine(ex); }
         return null!;
@@ -63,8 +59,6 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
             {
                 return existingSubscriptions;
             }
-
-            return null!;
         }
         catch (Exception ex) { Debug.WriteLine(ex); }
         return null!;
@@ -83,8 +77,6 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
                     return result;
                 }
             }
-
-            return null!;
         }
         catch (Exception ex) { Debug.WriteLine(ex); }
         return null!;
@@ -103,8 +95,6 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
                     return existingSubscription;
                 }
             }
-
-            return null!;
         }
         catch (Exception ex) { Debug.WriteLine(ex); }
         return null!;

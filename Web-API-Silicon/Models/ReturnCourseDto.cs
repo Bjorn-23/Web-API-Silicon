@@ -2,8 +2,11 @@
 
 namespace Web_API_Silicon.Models;
 
-public class CreateCourseDto
+public class ReturnCourseDto
 {
+    [Required]
+    public string Id { get; set; } = null!;
+
     [Required]
     public string Title { get; set; } = null!;
 
@@ -22,6 +25,6 @@ public class CreateCourseDto
 
     [Required]
     public string LengthInHours { get; set; } = null!;
-    
+
     public string? Rating { get; set; }
 }
