@@ -1,12 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Infrastructure.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using Web_API_Silicon.Filters;
 using Web_API_Silicon.Models;
 
 namespace Web_API_Silicon.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CoursesController : ControllerBase
+[UseApiKey]
+public class CourseController(CourseService coursesService) : ControllerBase
 {
+    private readonly CourseService _coursesService = coursesService;
+
     [HttpGet]
     public IActionResult GetAll()
     {

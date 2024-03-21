@@ -38,8 +38,7 @@ namespace Web_API_Silicon.Controllers
         #endregion
 
         #region Read
-        [Route("/api/Subscriptions/GetOne")]
-        [HttpGet]
+        [HttpGet("{Id}")]
         public async Task<IActionResult> GetOne(string Id)
         {
             if (ModelState.IsValid)
@@ -56,7 +55,6 @@ namespace Web_API_Silicon.Controllers
             return BadRequest();
         }
 
-        [Route("/api/Subscriptions/GetAll")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
