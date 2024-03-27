@@ -24,6 +24,7 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
             }
             else
             {
+                subscription.Id = existingSubscription.Id;
                 var result = await _repository.UpdateAsync(existingSubscription, subscription);
                 if (result != null)
                 {

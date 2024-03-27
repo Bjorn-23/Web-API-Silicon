@@ -20,15 +20,15 @@ public class CoursesController(CourseService coursesService) : ControllerBase
     {
         //if (ModelState.IsValid)
         //{
-            if (model != null)
+        if (model != null)
+        {
+            var result = await _coursesService.CreateCourseAsync(CourseFactory.Create(model));
+            if (result != null)
             {
-                var result = await _coursesService.CreateCourseAsync(CourseFactory.Create(model));
-                if (result != null)
-                {
-                    return Created("", CourseFactory.Create(result));
-                }
-                // else if result.statuscode == badrequest return badrequest
+                return Created("", CourseFactory.Create(result));
             }
+            // else if result.statuscode == badrequest return badrequest
+        }
         //}
 
         return BadRequest(model);
@@ -100,15 +100,14 @@ public class CoursesController(CourseService coursesService) : ControllerBase
 
     #region DELETE
 
-    [HttpDelete]
-    public async Task<IActionResult> Delete(ReturnCourseDto dto)
+    [HttpDelete("{Id}")]
+    public async Task<IActionResult> Delete(string Id)
     {
         if (ModelState.IsValid)
         {
-            if (dto != null)
+            if (!string.IsNullOrWhiteSpace(Id))
             {
-                var entity = CourseFactory.Create(dto);
-                var courses = await _coursesService.DeleteCourseAsync(entity);
+                var courses = await _coursesService.DeleteCourseAsync(Id);
                 if (courses != null)
                 {
                     return Ok(CourseFactory.Create(courses));

@@ -77,11 +77,11 @@ public class CourseService(CourseRepository repository)
         return null!;
     }
 
-    public async Task<CourseEntity> DeleteCourseAsync(CourseEntity entity)
+    public async Task<CourseEntity> DeleteCourseAsync(string Id)
     {
         try
         {
-            var existingCourse = await _repository.GetOneAsync(x => x.Id == entity.Id);
+            var existingCourse = await _repository.GetOneAsync(x => x.Id == Id);
             if (existingCourse != null)
             {
                 var result = await _repository.DeleteAsync(existingCourse);

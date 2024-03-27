@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Entity;
+using System.ComponentModel.DataAnnotations;
 using Web_API_Silicon.Models;
 
 namespace Web_API_Silicon.Factories;
@@ -11,6 +12,8 @@ public class CourseFactory
         {
             Title = dto.Title,
             Author = dto.Author,
+            ImageUrl = dto.ImageUrl,
+            AltText = dto.AltText,
             BestSeller = dto.BestSeller,
             Currency = dto.Currency,
             Price = dto.Price,
@@ -29,11 +32,13 @@ public class CourseFactory
             Id = dto.Id,
             Title = dto.Title,
             Author = dto.Author,
+            ImageUrl = dto.ImageUrl,
+            AltText = dto.AltText,
             BestSeller = dto.BestSeller,
             Currency = dto.Currency,
             Price = dto.Price,
             DiscountPrice = dto.DiscountPrice,
-            LengthInHours = dto.Length,
+            LengthInHours = dto.LengthInHours,
             Rating = dto.Rating,
         };
 
@@ -47,11 +52,13 @@ public class CourseFactory
             Id = entity.Id,
             Title = entity.Title,
             Author = entity.Author,
+            ImageUrl = entity.ImageUrl,
+            AltText = entity.AltText,
             BestSeller = entity.BestSeller,
             Currency = entity.Currency,
             Price = entity.Price,
             DiscountPrice = entity.DiscountPrice,
-            Length = entity.LengthInHours,
+            LengthInHours = entity.LengthInHours,
             Rating = entity.Rating,
         };
 
@@ -69,11 +76,13 @@ public class CourseFactory
                 Id = entity.Id,
                 Title = entity.Title,
                 Author = entity.Author,
+                ImageUrl = entity.ImageUrl,
+                AltText = entity.AltText,
                 BestSeller = entity.BestSeller,
                 Currency = entity.Currency,
                 Price = entity.Price,
                 DiscountPrice = entity.DiscountPrice,
-                Length = entity.LengthInHours,
+                LengthInHours = entity.LengthInHours,
                 Rating = entity.Rating,
             });
         }
