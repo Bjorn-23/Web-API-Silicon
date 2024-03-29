@@ -9,6 +9,7 @@ namespace Web_API_Silicon.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [UseApiKey]
+//[Authorize]
 public class CoursesController(CourseService coursesService) : ControllerBase
 {
     private readonly CourseService _coursesService = coursesService;

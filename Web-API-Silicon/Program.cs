@@ -3,6 +3,7 @@ using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Web_API_Silicon.Configurations;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,12 +57,14 @@ builder.Services.AddSwaggerGen(c => {
         }
     });
 });
+builder.Services.RegisterJwt(builder.Configuration);
 
 builder.Services.AddScoped<SubscriptionRepository>();
 builder.Services.AddScoped<SubscriptionService>();
 
 builder.Services.AddScoped<CourseRepository>();
 builder.Services.AddScoped<CourseService>();
+
 
 var app = builder.Build();
 
@@ -82,6 +85,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
