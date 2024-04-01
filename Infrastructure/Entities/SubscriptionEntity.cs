@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace Infrastructure.Entity;
+namespace Infrastructure.Entities;
 
 public class SubscriptionEntity
 {

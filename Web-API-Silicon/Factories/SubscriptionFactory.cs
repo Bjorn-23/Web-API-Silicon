@@ -1,4 +1,4 @@
-﻿using Infrastructure.Entity;
+﻿using Infrastructure.Entities;
 using Web_API_Silicon.Models;
 
 namespace Web_API_Silicon.Factories;

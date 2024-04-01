@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(x =>
 {
-    x.UseSqlServer(builder.Configuration.GetConnectionString("CoursesSqlServer"));
+    x.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
 });
 
 builder.Services.AddCors(x =>
@@ -64,6 +64,9 @@ builder.Services.AddScoped<SubscriptionService>();
 
 builder.Services.AddScoped<CourseRepository>();
 builder.Services.AddScoped<CourseService>();
+
+builder.Services.AddScoped<ContactRepository>();
+builder.Services.AddScoped<ContactService>();
 
 
 var app = builder.Build();

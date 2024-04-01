@@ -3,7 +3,7 @@ using Infrastructure.Entities;
 
 namespace Infrastructure.Repositories;
 
-public class SubscriptionRepository(DataContext context) : BaseRepo<SubscriptionEntity, DataContext>(context)
+public class ContactRepository(DataContext context) : BaseRepo<ContactEntity, DataContext>(context)
 {
     private readonly DataContext _context = context;
 }
