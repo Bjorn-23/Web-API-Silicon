@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web_API_Silicon.Factories;
 using Web_API_Silicon.Filters;
@@ -9,7 +10,7 @@ namespace Web_API_Silicon.Controllers;
 [Route("api/[controller]")]
 [UseApiKey]
 [ApiController]
-public class ContactController(ContactService contactService) : Controller
+public class ContactController(ContactService contactService) : ControllerBase
 {
     private readonly ContactService _contactService = contactService;
 
@@ -50,6 +51,7 @@ public class ContactController(ContactService contactService) : Controller
         return BadRequest();
     }
 
+   
     [HttpPut]
     public async Task<IActionResult> UpdateContact(ReturnContactDto dto)
     {
