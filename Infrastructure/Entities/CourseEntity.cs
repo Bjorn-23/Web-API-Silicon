@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Infrastructure.Entity;
+namespace Infrastructure.Entities;
 
 public class CourseEntity
 {

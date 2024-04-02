@@ -1,5 +1,5 @@
 ﻿
-using Infrastructure.Entity;
+using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Context;
@@ -10,6 +10,9 @@ public class DataContext(DbContextOptions options) : DbContext(options)
 
     public DbSet<CourseEntity> Courses { get; set; }
 
+    public DbSet<ContactEntity> Contacts { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -17,5 +20,8 @@ public class DataContext(DbContextOptions options) : DbContext(options)
         modelBuilder.Entity<SubscriptionEntity>()
             .HasIndex(e => e.Email)
             .IsUnique();
+
+        modelBuilder.Entity<ContactEntity>()
+            .HasKey(e => e.Id);
     }
 }

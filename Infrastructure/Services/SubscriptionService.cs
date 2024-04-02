@@ -1,4 +1,4 @@
-﻿using Infrastructure.Entity;
+﻿using Infrastructure.Entities;
 using Infrastructure.Repositories;
 using System.Diagnostics;
 

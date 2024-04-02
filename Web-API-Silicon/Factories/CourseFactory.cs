@@ -1,4 +1,4 @@
-﻿using Infrastructure.Entity;
+﻿using Infrastructure.Entities;
 using System.ComponentModel.DataAnnotations;
 using Web_API_Silicon.Models;
 
