@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web_API_Silicon.Factories;
 using Web_API_Silicon.Filters;
@@ -16,21 +17,22 @@ public class CoursesController(CourseService coursesService) : ControllerBase
 
     #region CREATE
 
+    [Authorize] // used to authorize with JWT bearer token
     [HttpPost]
     public async Task<IActionResult> Create(CreateCourseDto model)
     {
-        //if (ModelState.IsValid)
-        //{
-        if (model != null)
+        if (ModelState.IsValid)
         {
-            var result = await _coursesService.CreateCourseAsync(CourseFactory.Create(model));
-            if (result != null)
+            if (model != null)
             {
-                return Created("", CourseFactory.Create(result));
+                var result = await _coursesService.CreateCourseAsync(CourseFactory.Create(model));
+                if (result != null)
+                {
+                    return Created("", CourseFactory.Create(result));
+                }
+                // else if result.statuscode == badrequest return badrequest
             }
-            // else if result.statuscode == badrequest return badrequest
         }
-        //}
 
         return BadRequest(model);
     }
@@ -78,6 +80,7 @@ public class CoursesController(CourseService coursesService) : ControllerBase
 
     #region UPDATE
 
+    [Authorize] // used to authorize with JWT bearer token
     [HttpPut]
     public async Task<IActionResult> Update(ReturnCourseDto dto)
     {
@@ -100,7 +103,7 @@ public class CoursesController(CourseService coursesService) : ControllerBase
     #endregion
 
     #region DELETE
-
+    [Authorize] // used to authorize with JWT bearer token
     [HttpDelete("{Id}")]
     public async Task<IActionResult> Delete(string Id)
     {
