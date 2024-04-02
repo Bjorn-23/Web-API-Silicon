@@ -40,14 +40,14 @@ public class ContactService(ContactRepository repository)
 
     }
 
-    public async Task<IEnumerable<ContactEntity>> GetContactByIdAsync(string Id)
+    public async Task<ContactEntity> GetContactByIdAsync(string id)
     {
         try
         {
-            var existingContacts = await _repository.GetAllWithPredicateAsync(x => x.Email == Id);
-            if (existingContacts != null)
+            var existingContact = await _repository.GetOneAsync(x => x.Id == id);
+            if (existingContact != null)
             {
-                return existingContacts;
+                return existingContact;
             }
         }
         catch (Exception ex) { Debug.WriteLine(ex); }
@@ -88,7 +88,7 @@ public class ContactService(ContactRepository repository)
         return null!;
     }
 
-    public async Task<ContactEntity> DeleteCourseAsync(string Id)
+    public async Task<ContactEntity> DeleteContactAsync(string Id)
     {
         try
         {
