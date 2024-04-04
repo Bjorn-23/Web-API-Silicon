@@ -1,5 +1,7 @@
 ﻿using Infrastructure.Entities;
+using Infrastructure.Factories;
 using Infrastructure.Repositories;
+using Infrastructure.Utilities;
 using System.Diagnostics;
 
 namespace Infrastructure.Services;
@@ -8,17 +10,15 @@ public class ContactService(ContactRepository repository)
 {
     private readonly ContactRepository _repository = repository;
 
-    public async Task<ContactEntity> CreateContactAsync(ContactEntity entity)
+    public async Task<ResponseResult> CreateContactAsync(ContactEntity entity)
     {
         try
         {            
             var result = await _repository.CreateAsync(entity);
             if (result != null)
             {
-                return result;
+                return ResponseFactory.Created(result);
             }
-
-            //return 409 conflict
         }
         catch (Exception ex) { Debug.WriteLine(ex); }
         return null!;
@@ -70,7 +70,7 @@ public class ContactService(ContactRepository repository)
 
     }
 
-    public async Task<ContactEntity> UpdateContactAsync(ContactEntity updatedEntity)
+    public async Task<ResponseResult> UpdateContactAsync(ContactEntity updatedEntity)
     {
         try
         {
@@ -80,7 +80,7 @@ public class ContactService(ContactRepository repository)
                 var result = await _repository.UpdateAsync(existingContact, updatedEntity);
                 if (result != null)
                 {
-                    return result;
+                    return ResponseFactory.Ok(result);
                 }
             }
         }
@@ -88,7 +88,7 @@ public class ContactService(ContactRepository repository)
         return null!;
     }
 
-    public async Task<ContactEntity> DeleteContactAsync(string Id)
+    public async Task<ResponseResult> DeleteContactAsync(string Id)
     {
         try
         {
@@ -98,7 +98,8 @@ public class ContactService(ContactRepository repository)
                 var result = await _repository.DeleteAsync(existingContact);
                 if (result)
                 {
-                    return existingContact;
+                    return ResponseFactory.Ok(result);
+
                 }
             }
         }

@@ -3,15 +3,17 @@ using Infrastructure.Services;
 using Infrastructure.Factories;
 using Infrastructure.Models;
 using Web_API_Silicon.Filters;
+using Web_API_Silicon.Helpers;
 
 namespace Web_API_Silicon.Controllers;
 
 [Route("api/[controller]")]
 [UseApiKey]
 [ApiController]
-public class ContactController(ContactService contactService) : ControllerBase
+public class ContactController(ContactService contactService, StatusCodeSelector statusCode) : ControllerBase
 {
     private readonly ContactService _contactService = contactService;
+    private readonly StatusCodeSelector _statusCode = statusCode;
 
     [HttpGet]
     public async Task<IActionResult> GetAllContactForms()
@@ -44,13 +46,14 @@ public class ContactController(ContactService contactService) : ControllerBase
         var result = await _contactService.CreateContactAsync(ContactFactory.Create(dto));
         if (result != null)
         {
-            return Created();
+            //return Created();
+            return _statusCode.StatusSelector(result);
         }
 
         return BadRequest();
     }
 
-   
+
     [HttpPut]
     public async Task<IActionResult> UpdateContact(ReturnContactDto dto)
     {
@@ -58,7 +61,7 @@ public class ContactController(ContactService contactService) : ControllerBase
         var result = await _contactService.UpdateContactAsync(ContactFactory.Create(dto));
         if (result != null)
         {
-            return Ok(ContactFactory.Create(result));
+            return _statusCode.StatusSelector(result);
         }
 
         return BadRequest();
@@ -72,7 +75,7 @@ public class ContactController(ContactService contactService) : ControllerBase
             var result = await _contactService.DeleteContactAsync(Id);
             if (result != null)
             {
-                return Ok(ContactFactory.Create(result));
+                return _statusCode.StatusSelector(result);
             }
         }
 

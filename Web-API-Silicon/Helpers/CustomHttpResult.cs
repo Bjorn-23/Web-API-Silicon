@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web_API_Silicon.Utilities;
+namespace Web_API_Silicon.Helpers;
 
 public class CustomHttpResult(StatusCode? responseResult) : IActionResult
 {

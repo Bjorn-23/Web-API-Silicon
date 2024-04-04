@@ -3,7 +3,8 @@ using Infrastructure.Services;
 using Infrastructure.Factories;
 using Infrastructure.Models;
 using Web_API_Silicon.Filters;
-using Web_API_Silicon.Utilities;
+using Web_API_Silicon.Helpers;
+
 
 
 namespace Web_API_Silicon.Controllers
@@ -12,9 +13,10 @@ namespace Web_API_Silicon.Controllers
     [ApiController]
     [UseApiKey]
     //[Authorize]
-    public class SubscriptionsController(SubscriptionService subscriptionService) : ControllerBase
+    public class SubscriptionsController(SubscriptionService subscriptionService, StatusCodeSelector statusCode) : ControllerBase
     {
         private readonly SubscriptionService _subscriptionService = subscriptionService;
+        private readonly StatusCodeSelector _statusCode = statusCode;
 
         #region Create
         [HttpPost]
@@ -24,10 +26,10 @@ namespace Web_API_Silicon.Controllers
             {
                 if (subscriber != null)
                 {
-                    var result = await _subscriptionService.CreateOrUpdateSubscriptionAsync(SubscriptionFactory.Create(subscriber));                 
+                    var result = await _subscriptionService.CreateOrUpdateSubscriptionAsync(SubscriptionFactory.Create(subscriber));
                     if (result.StatusCode != null)
                     {
-                        return new CustomHttpResult(result.StatusCode);
+                        return _statusCode.StatusSelector(result);                        
                     }
                 }
             }
@@ -81,7 +83,7 @@ namespace Web_API_Silicon.Controllers
                 var result = await _subscriptionService.UpdateSubscriptionAsync(subscriber);
                 if (result.StatusCode != null)
                 {
-                    return new CustomHttpResult(result.StatusCode);
+                    return _statusCode.StatusSelector(result);
                 }
             }
 
@@ -98,7 +100,7 @@ namespace Web_API_Silicon.Controllers
                 var result = await _subscriptionService.DeleteSubscriptionAsync(Id);
                 if (result.StatusCode != null)
                 {
-                    return new CustomHttpResult(result.StatusCode);
+                    return _statusCode.StatusSelector(result);
                 }
             }
 

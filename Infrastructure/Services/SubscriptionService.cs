@@ -20,7 +20,7 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
                 var result = await _repository.CreateAsync(subscription);
                 if (result != null)
                 {
-                    return ResponseFactory.Created(SubscriptionFactory.Create(result), "Subscription created");                    
+                    return ResponseFactory.Created(SubscriptionFactory.Create(result));                    
                 }
             }
             if (existingSubscription != null)
@@ -29,7 +29,7 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
                 var result = await _repository.UpdateAsync(existingSubscription, subscription);
                 if (result != null)
                 {
-                    return ResponseFactory.Ok(result, "Subscription updated"); ;
+                    return ResponseFactory.Ok(result);
                 }
             }
 

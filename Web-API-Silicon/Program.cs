@@ -4,6 +4,7 @@ using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Web_API_Silicon.Configurations;
+using Web_API_Silicon.Helpers;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -58,6 +59,8 @@ builder.Services.AddSwaggerGen(c => {
     });
 });
 builder.Services.RegisterJwt(builder.Configuration);
+
+builder.Services.AddScoped<StatusCodeSelector>(); // not currently using - remove unless this changes.
 
 builder.Services.AddScoped<SubscriptionRepository>();
 builder.Services.AddScoped<SubscriptionService>();
