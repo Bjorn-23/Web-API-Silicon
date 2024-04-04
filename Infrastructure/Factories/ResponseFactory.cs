@@ -8,7 +8,7 @@ public class ResponseFactory
     {
         return new ResponseResult()
         {
-            ContentResult = obj,
+            Content = obj,
             Message = message ?? "Success",
             StatusCode = StatusCode.OK
         };
@@ -27,7 +27,7 @@ public class ResponseFactory
     {
         return new ResponseResult()
         {
-            ContentResult = obj,
+            Content = obj,
             Message = message ?? "Success",
             StatusCode = StatusCode.CREATED
         };

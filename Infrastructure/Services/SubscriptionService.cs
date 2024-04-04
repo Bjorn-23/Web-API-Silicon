@@ -1,6 +1,8 @@
-﻿using Infrastructure.Entities;
+﻿using System.Diagnostics;
 using Infrastructure.Repositories;
-using System.Diagnostics;
+using Infrastructure.Entities;
+using Infrastructure.Factories;
+using Infrastructure.Utilities;
 
 namespace Infrastructure.Services;
 
@@ -8,7 +10,7 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
 {
     private readonly SubscriptionRepository _repository = subscriptionRepository;
 
-    public async Task<SubscriptionEntity> CreateOrUpdateSubscriptionAsync(SubscriptionEntity subscription)
+    public async Task<ResponseResult> CreateOrUpdateSubscriptionAsync(SubscriptionEntity subscription)
     {
         try
         {
@@ -18,23 +20,24 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
                 var result = await _repository.CreateAsync(subscription);
                 if (result != null)
                 {
-                    return result;
-
+                    return ResponseFactory.Created(SubscriptionFactory.Create(result), "Subscription created");                    
                 }
             }
-            else
+            if (existingSubscription != null)
             {
                 subscription.Id = existingSubscription.Id;
                 var result = await _repository.UpdateAsync(existingSubscription, subscription);
                 if (result != null)
                 {
-                    return result;
+                    return ResponseFactory.Ok(result, "Subscription updated"); ;
                 }
             }
-        }
-        catch (Exception ex) { Debug.WriteLine(ex); }
-        return null!;
 
+            return ResponseFactory.BadRequest();
+
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;     
     }
 
     public async Task<SubscriptionEntity> GetOneSubscriptionsAsync(string Id)
@@ -65,7 +68,7 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
         return null!;
     }
 
-    public async Task<SubscriptionEntity> UpdateSubscriptionAsync(SubscriptionEntity subscription)
+    public async Task<ResponseResult> UpdateSubscriptionAsync(SubscriptionEntity subscription)
     {
         try
         {
@@ -75,15 +78,22 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
                 var result = await _repository.UpdateAsync(existingSubscription, subscription);
                 if (result != null)
                 {
-                    return result;
+                    return ResponseFactory.Ok(result, "Subscription updated");
                 }
             }
+            if (subscription == null)
+            {
+                return ResponseFactory.NotFound();
+            }
+
+            return ResponseFactory.BadRequest();
+
         }
         catch (Exception ex) { Debug.WriteLine(ex); }
         return null!;
     }
 
-    public async Task<SubscriptionEntity> DeleteSubscriptionAsync(string Id)
+    public async Task<ResponseResult> DeleteSubscriptionAsync(string Id)
     {
         try
         {
@@ -93,14 +103,18 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
                 var result = await _repository.DeleteAsync(existingSubscription);
                 if (result)
                 {
-                    return existingSubscription;
+                    return ResponseFactory.Ok(existingSubscription, "Subscription deleted");
                 }
             }
+            if (existingSubscription == null)
+            {
+                return ResponseFactory.NotFound();
+            }
+
+            return ResponseFactory.BadRequest();
         }
         catch (Exception ex) { Debug.WriteLine(ex); }
         return null!;
     }
-
-
 
 }

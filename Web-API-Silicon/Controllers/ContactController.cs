@@ -1,9 +1,8 @@
-﻿using Infrastructure.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Web_API_Silicon.Factories;
+﻿using Microsoft.AspNetCore.Mvc;
+using Infrastructure.Services;
+using Infrastructure.Factories;
+using Infrastructure.Models;
 using Web_API_Silicon.Filters;
-using Web_API_Silicon.Models;
 
 namespace Web_API_Silicon.Controllers;
 

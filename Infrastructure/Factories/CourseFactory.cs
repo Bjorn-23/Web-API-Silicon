@@ -1,8 +1,7 @@
 ﻿using Infrastructure.Entities;
-using System.ComponentModel.DataAnnotations;
-using Web_API_Silicon.Models;
+using Infrastructure.Models;
 
-namespace Web_API_Silicon.Factories;
+namespace Infrastructure.Factories;
 
 public class CourseFactory
 {
@@ -71,20 +70,7 @@ public class CourseFactory
 
         foreach (var entity in entities)
         {
-            dtos.Add(new ReturnCourseDto()
-            {
-                Id = entity.Id,
-                Title = entity.Title,
-                Author = entity.Author,
-                ImageUrl = entity.ImageUrl,
-                AltText = entity.AltText,
-                BestSeller = entity.BestSeller,
-                Currency = entity.Currency,
-                Price = entity.Price,
-                DiscountPrice = entity.DiscountPrice,
-                LengthInHours = entity.LengthInHours,
-                Rating = entity.Rating,
-            });
+            dtos.Add(Create(entity));
         }
         
         return dtos;

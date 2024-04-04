@@ -1,7 +1,8 @@
 ﻿using Infrastructure.Entities;
-using Web_API_Silicon.Models;
+using Infrastructure.Models;
 
-namespace Web_API_Silicon.Factories;
+
+namespace Infrastructure.Factories;
 
 public static class SubscriptionFactory
 {
@@ -55,17 +56,7 @@ public static class SubscriptionFactory
         
         foreach (var entity in entitites)
         {
-            models.Add(new SubscriptionReturnModel()
-            {
-                Id = entity.Id,
-                Email = entity.Email,
-                DailyNewsletter = entity.DailyNewsletter,
-                AdvertisingUpdates = entity.AdvertisingUpdates,
-                WeekInReview = entity.WeekInReview,
-                EventUpdates = entity.EventUpdates,
-                StartupsWeekly = entity.StartupsWeekly,
-                Podcasts = entity.Podcasts,
-            });
+            models.Add(Create(entity));
         }
 
         return models;

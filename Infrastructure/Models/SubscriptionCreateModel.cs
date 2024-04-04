@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web_API_Silicon.Models;
+namespace Infrastructure.Models;
 
 public class SubscriptionCreateModel
 {
