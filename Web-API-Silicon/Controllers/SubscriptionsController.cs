@@ -1,8 +1,9 @@
-﻿using Infrastructure.Services;
-using Microsoft.AspNetCore.Mvc;
-using Web_API_Silicon.Factories;
+﻿using Microsoft.AspNetCore.Mvc;
+using Infrastructure.Services;
+using Infrastructure.Factories;
+using Infrastructure.Models;
 using Web_API_Silicon.Filters;
-using Web_API_Silicon.Models;
+using Web_API_Silicon.Utilities;
 
 
 namespace Web_API_Silicon.Controllers
@@ -23,13 +24,12 @@ namespace Web_API_Silicon.Controllers
             {
                 if (subscriber != null)
                 {
-                    var result = await _subscriptionService.CreateOrUpdateSubscriptionAsync(SubscriptionFactory.Create(subscriber));
-                    if (result != null)
+                    var result = await _subscriptionService.CreateOrUpdateSubscriptionAsync(SubscriptionFactory.Create(subscriber));                 
+                    if (result.StatusCode != null)
                     {
-                        return Ok(SubscriptionFactory.Create(result));
+                        return new CustomHttpResult(result.StatusCode);
                     }
                 }
-                return BadRequest();
             }
 
             return BadRequest();
@@ -48,8 +48,6 @@ namespace Web_API_Silicon.Controllers
                 {
                     return Ok(SubscriptionFactory.Create(result));
                 }
-
-                return NotFound();
             }
 
             return BadRequest();
@@ -66,8 +64,6 @@ namespace Web_API_Silicon.Controllers
 
                     return Ok(SubscriptionFactory.Create(result));
                 }
-
-                return NotFound();
             }
 
             return BadRequest();
@@ -83,9 +79,9 @@ namespace Web_API_Silicon.Controllers
             {
                 var subscriber = SubscriptionFactory.Create(model);
                 var result = await _subscriptionService.UpdateSubscriptionAsync(subscriber);
-                if (result != null)
+                if (result.StatusCode != null)
                 {
-                    return Ok(result);
+                    return new CustomHttpResult(result.StatusCode);
                 }
             }
 
@@ -100,14 +96,12 @@ namespace Web_API_Silicon.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _subscriptionService.DeleteSubscriptionAsync(Id);
-                if (result != null)
+                if (result.StatusCode != null)
                 {
-                    return Ok();
-
+                    return new CustomHttpResult(result.StatusCode);
                 }
-                return BadRequest();
-
             }
+
             return BadRequest();
         }
         #endregion

@@ -1,9 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web_API_Silicon.Models;
+namespace Infrastructure.Models;
 
-public class CreateCourseDto
+
+public class ReturnCourseDto
 {
+    [Required]
+    public string Id { get; set; } = null!;
+
     [Required]
     public string Title { get; set; } = null!;
 

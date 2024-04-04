@@ -1,8 +1,7 @@
 ﻿using Infrastructure.Entities;
-using System.ComponentModel.DataAnnotations;
-using Web_API_Silicon.Models;
+using Infrastructure.Models;
 
-namespace Web_API_Silicon.Factories;
+namespace Infrastructure.Factories;
 
 public class ContactFactory
 {
@@ -53,14 +52,7 @@ public class ContactFactory
 
         foreach (var entity in entities)
         {
-            dtos.Add(new ReturnContactDto()
-            {
-                Id = entity.Id,
-                FullName = entity.FullName,
-                Email = entity.Email,
-                Message = entity.Message,
-                Services = entity.Services,
-            });
+            dtos.Add(Create(entity));
         }
 
         return dtos;
