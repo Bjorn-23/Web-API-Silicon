@@ -4,6 +4,7 @@ using Infrastructure.Factories;
 using Infrastructure.Models;
 using Web_API_Silicon.Filters;
 using Web_API_Silicon.Helpers;
+using System.Diagnostics;
 
 namespace Web_API_Silicon.Controllers;
 
@@ -14,40 +15,63 @@ public class ContactController(ContactService contactService, StatusCodeSelector
 {
     private readonly ContactService _contactService = contactService;
     private readonly StatusCodeSelector _statusCode = statusCode;
+    
+    [HttpPost]
+    public async Task<IActionResult> CreateContactForm(CreateContactDto dto)
+    {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                var result = await _contactService.CreateContactAsync(ContactFactory.Create(dto));
+                if (result != null)
+                {
+                    return _statusCode.StatusSelector(result);
+                }
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        }
+
+        return BadRequest();
+    }
 
     [HttpGet]
     public async Task<IActionResult> GetAllContactForms()
     {
-        var result = await _contactService.GetAllContactsAsync();
-        if (result.Count() > 0)
+        if (ModelState.IsValid)
         {
-            return Ok(ContactFactory.Create(result));
+            try
+            {
+                var result = await _contactService.GetAllContactsAsync();
+                if (result != null)
+                {
+                    return Ok(ContactFactory.Create(result));
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
-        return NotFound();
+        return BadRequest();
     }
 
     [HttpGet("{Id}")]
     public async Task<IActionResult> GetOneContactForm(string Id)
     {
-        var result = await _contactService.GetContactByIdAsync(Id);
-        if (result != null)
+        if (ModelState.IsValid)
         {
-            return Ok(ContactFactory.Create(result));
-        }
+            try
+            {
+                var result = await _contactService.GetContactByIdAsync(Id);
+                if (result != null)
+                {
+                    return Ok(ContactFactory.Create(result));
+                }
 
-        return NotFound();
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> CreateContactForm(CreateContactDto dto)
-    {
-
-        var result = await _contactService.CreateContactAsync(ContactFactory.Create(dto));
-        if (result != null)
-        {
-            //return Created();
-            return _statusCode.StatusSelector(result);
+                return NotFound();
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
         return BadRequest();
@@ -57,11 +81,19 @@ public class ContactController(ContactService contactService, StatusCodeSelector
     [HttpPut]
     public async Task<IActionResult> UpdateContact(ReturnContactDto dto)
     {
-
-        var result = await _contactService.UpdateContactAsync(ContactFactory.Create(dto));
-        if (result != null)
+        if (ModelState.IsValid)
         {
-            return _statusCode.StatusSelector(result);
+            try
+            {
+                var result = await _contactService.UpdateContactAsync(ContactFactory.Create(dto));
+                if (result != null)
+                {
+                    return _statusCode.StatusSelector(result);
+                }
+                
+                return NotFound();
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
         return BadRequest();
@@ -72,11 +104,17 @@ public class ContactController(ContactService contactService, StatusCodeSelector
     {
         if (ModelState.IsValid)
         {
-            var result = await _contactService.DeleteContactAsync(Id);
-            if (result != null)
+            try
             {
-                return _statusCode.StatusSelector(result);
+                var result = await _contactService.DeleteContactAsync(Id);
+                if (result != null)
+                {
+                    return _statusCode.StatusSelector(result);
+                }
+
+                return NotFound();
             }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
         return BadRequest();

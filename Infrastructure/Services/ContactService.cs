@@ -99,7 +99,6 @@ public class ContactService(ContactRepository repository)
                 if (result)
                 {
                     return ResponseFactory.Ok(result);
-
                 }
             }
         }
