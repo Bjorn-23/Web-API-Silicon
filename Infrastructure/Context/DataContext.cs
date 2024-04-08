@@ -12,6 +12,8 @@ public class DataContext(DbContextOptions options) : DbContext(options)
 
     public DbSet<ContactEntity> Contacts { get; set; }
 
+    public DbSet<CategoryEntity> Categories { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

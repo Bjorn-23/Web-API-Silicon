@@ -34,4 +34,7 @@ public class CourseEntity
 
     public string? Rating { get; set; }
 
+    public int? CategoryId { get; set; }
+
+    public CategoryEntity? Category { get; set; }
 }

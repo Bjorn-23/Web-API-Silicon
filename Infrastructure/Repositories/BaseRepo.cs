@@ -46,6 +46,21 @@ namespace Infrastructure.Repositories
             return null!;
         }
 
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(string str, string search)
+        {
+            try
+            {
+                var result = await _context.Set<TEntity>().ToListAsync();
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+            catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }
+
+            return null!;
+        }
+
         public virtual async Task<IEnumerable<TEntity>> GetAllWithPredicateAsync(Expression<Func<TEntity, bool>> predicate)
         {
             try

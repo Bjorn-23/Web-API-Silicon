@@ -71,6 +71,10 @@ builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<ContactRepository>();
 builder.Services.AddScoped<ContactService>();
 
+builder.Services.AddScoped<CategoryRepository>();
+builder.Services.AddScoped<CategoryService>();
+
+
 
 var app = builder.Build();
 
