@@ -59,12 +59,13 @@ public class CoursesController(CourseService coursesService) : ControllerBase
         return BadRequest();
     }
 
+
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(string? category, string? searchQuery)
     {
         if (ModelState.IsValid)
         {
-            var courses = await _coursesService.GetAllCoursesAsync();
+            var courses = await _coursesService.GetAllCoursesAsync(category, searchQuery);
             if (courses != null)
             {
                 return Ok(CourseFactory.Create(courses));
@@ -73,8 +74,9 @@ public class CoursesController(CourseService coursesService) : ControllerBase
             return NotFound();
         }
 
-        return BadRequest();
+        return StatusCode(StatusCodes.Status500InternalServerError);
     }
+
 
     #endregion
 

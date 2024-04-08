@@ -44,11 +44,11 @@ public class CourseService(CourseRepository repository)
 
     }
 
-    public async Task<IEnumerable<CourseEntity>> GetAllCoursesAsync()
+    public async Task<IEnumerable<CourseEntity>> GetAllCoursesAsync(string? category, string? searchQuery)
     {
         try
         {
-            var existingCourses = await _repository.GetAllAsync();
+            var existingCourses = await _repository.GetAllAsync(category, searchQuery);
             if (existingCourses.Count() > 0)
             {
                 return existingCourses;
