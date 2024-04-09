@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Entities;
+using Infrastructure.Models;
 using Infrastructure.Repositories;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -44,12 +45,12 @@ public class CourseService(CourseRepository repository)
 
     }
 
-    public async Task<IEnumerable<CourseEntity>> GetAllCoursesAsync(string? category, string? searchQuery)
+    public async Task<CourseResult> GetAllCoursesAsync(string? category, string? searchQuery, int pageNumber, int pageSize)
     {
         try
         {
-            var existingCourses = await _repository.GetAllAsync(category, searchQuery);
-            if (existingCourses.Count() > 0)
+            var existingCourses = await _repository.GetAllAsync(category, searchQuery, pageNumber, pageSize);
+            if (existingCourses != null && existingCourses.ReturnCourses.Count() >= 1)
             {
                 return existingCourses;
             }           

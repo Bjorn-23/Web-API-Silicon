@@ -61,14 +61,14 @@ public class CoursesController(CourseService coursesService) : ControllerBase
 
 
     [HttpGet]
-    public async Task<IActionResult> GetAll(string? category, string? searchQuery)
+    public async Task<IActionResult> GetAll(string? category = "", string? searchQuery = "", int pageNumber  = 1, int pageSize = 9)
     {
         if (ModelState.IsValid)
         {
-            var courses = await _coursesService.GetAllCoursesAsync(category, searchQuery);
+            var courses = await _coursesService.GetAllCoursesAsync(category, searchQuery, pageNumber, pageSize);
             if (courses != null)
             {
-                return Ok(CourseFactory.Create(courses));
+                return Ok(courses);
             }
 
             return NotFound();
