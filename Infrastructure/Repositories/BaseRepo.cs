@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq.Expressions;
+using Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -46,14 +47,14 @@ namespace Infrastructure.Repositories
             return null!;
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(string str, string search)
+        public virtual async Task<CourseResult> GetAllAsync(string str, string search, int pageNumber, int pageSize)
         {
             try
             {
                 var result = await _context.Set<TEntity>().ToListAsync();
                 if (result != null)
                 {
-                    return result;
+                    return new CourseResult();
                 }
             }
             catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }

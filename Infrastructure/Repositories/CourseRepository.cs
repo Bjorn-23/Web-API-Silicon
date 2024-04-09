@@ -1,5 +1,7 @@
 ﻿using Infrastructure.Context;
 using Infrastructure.Entities;
+using Infrastructure.Factories;
+using Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
@@ -9,11 +11,12 @@ public class CourseRepository(DataContext context) : BaseRepo<CourseEntity, Data
 {
     private readonly DataContext _context = context;
 
-    public override async Task<IEnumerable<CourseEntity>> GetAllAsync(string? category, string? searchQuery)
+    public override async Task<CourseResult> GetAllAsync(string? category, string? searchQuery, int pageNumber, int pageSize)
     
     {
         try
         {
+            #region QUERIES
             var query = _context.Courses.Include(i => i.Category).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(category) && category != "all")
@@ -27,8 +30,30 @@ public class CourseRepository(DataContext context) : BaseRepo<CourseEntity, Data
             }
 
             query = query.OrderBy(i => i.Title);
-        
-            return await query.ToListAsync();
+            #endregion
+
+            #region PAGINATION
+            var pagination = new Pagination
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalItems = await query.CountAsync(),
+                CurrentPage = pageNumber // is this right?
+            };
+
+            pagination.TotalPages = (int)Math.Ceiling(pagination.TotalItems / (double)pageSize);
+            var returnCourses = CourseFactory.Create(await query.Skip((pageNumber -1) * pagination.PageSize).Take(pagination.PageSize).ToListAsync());
+            #endregion
+
+            if(pagination != null && returnCourses != null)
+            {
+                return new CourseResult
+                {
+                    Pagination = pagination,
+                    ReturnCourses = returnCourses
+                };                
+            }
+
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
         return null!;
