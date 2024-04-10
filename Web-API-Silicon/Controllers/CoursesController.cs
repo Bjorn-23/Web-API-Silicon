@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Infrastructure.Factories;
 using Web_API_Silicon.Filters;
 using Infrastructure.Models;
+using System.Diagnostics;
 
 namespace Web_API_Silicon.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 [UseApiKey]
-//[Authorize]
 public class CoursesController(CourseService coursesService) : ControllerBase
 {
     private readonly CourseService _coursesService = coursesService;
@@ -23,22 +23,25 @@ public class CoursesController(CourseService coursesService) : ControllerBase
     {
         if (ModelState.IsValid)
         {
-            if (model != null)
+            try
             {
-                var result = await _coursesService.CreateCourseAsync(CourseFactory.Create(model));
-                if (result != null)
+                if (model != null)
                 {
-                    return Created("", CourseFactory.Create(result));
+                    var result = await _coursesService.CreateCourseAsync(CourseFactory.Create(model));
+                    if (result != null)
+                    {
+                        return Created("", CourseFactory.Create(result));
+                    }
+                    // else if result.statuscode == badrequest return badrequest
                 }
-                // else if result.statuscode == badrequest return badrequest
             }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
         return BadRequest(model);
     }
 
     #endregion
-
 
     #region READ
 
@@ -47,31 +50,39 @@ public class CoursesController(CourseService coursesService) : ControllerBase
     {
         if (ModelState.IsValid)
         {
-            var courses = await _coursesService.GetCourseAsync(Id);
-            if (courses != null)
+            try
             {
-                return Ok(CourseFactory.Create(courses));
-            }
+                var courses = await _coursesService.GetCourseAsync(Id);
+                if (courses != null)
+                {
+                    return Ok(CourseFactory.Create(courses));
+                }
 
-            return NotFound();
-        }
+                return NotFound();
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
+    }
 
         return BadRequest();
     }
 
 
     [HttpGet]
-    public async Task<IActionResult> GetAll(string? category = "", string? searchQuery = "", int pageNumber  = 1, int pageSize = 9)
+    public async Task<IActionResult> GetAll(string? category = "", string? searchQuery = "", int pageNumber = 1, int pageSize = 9)
     {
         if (ModelState.IsValid)
         {
-            var courses = await _coursesService.GetAllCoursesAsync(category, searchQuery, pageNumber, pageSize);
-            if (courses != null)
+            try
             {
-                return Ok(courses);
-            }
+                var courses = await _coursesService.GetAllCoursesAsync(category, searchQuery, pageNumber, pageSize);
+                if (courses != null)
+                {
+                    return Ok(courses);
+                }
 
-            return NotFound();
+                return NotFound();
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
         return StatusCode(StatusCodes.Status500InternalServerError);
@@ -88,15 +99,19 @@ public class CoursesController(CourseService coursesService) : ControllerBase
     {
         if (ModelState.IsValid)
         {
-            if (dto != null)
+            try
             {
-                var entity = CourseFactory.Create(dto);
-                var courses = await _coursesService.UpdateCourseAsync(entity);
-                if (courses != null)
+                if (dto != null)
                 {
-                    return Ok(CourseFactory.Create(courses));
+                    var entity = CourseFactory.Create(dto);
+                    var courses = await _coursesService.UpdateCourseAsync(entity);
+                    if (courses != null)
+                    {
+                        return Ok(CourseFactory.Create(courses));
+                    }
                 }
             }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
         return BadRequest();
@@ -111,21 +126,23 @@ public class CoursesController(CourseService coursesService) : ControllerBase
     {
         if (ModelState.IsValid)
         {
-            if (!string.IsNullOrWhiteSpace(Id))
+            try
             {
-                var courses = await _coursesService.DeleteCourseAsync(Id);
-                if (courses != null)
+                if (!string.IsNullOrWhiteSpace(Id))
                 {
-                    return Ok(CourseFactory.Create(courses));
+                    var courses = await _coursesService.DeleteCourseAsync(Id);
+                    if (courses != null)
+                    {
+                        return Ok(CourseFactory.Create(courses));
+                    }
                 }
             }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
         return BadRequest();
     }
 
     #endregion
-
-
 
 }

@@ -5,6 +5,11 @@ namespace Web_API_Silicon.Helpers;
 
 public class StatusCodeSelector : ControllerBase
 {
+    /// <summary>
+    /// Genereates a http Statusmessage from correspponding ResponseResult.
+    /// </summary>
+    /// <param name="response"></param>
+    /// <returns></returns>
     public IActionResult StatusSelector(ResponseResult response)
     {
         switch (response.StatusCode)
