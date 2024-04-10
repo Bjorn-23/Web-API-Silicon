@@ -10,6 +10,11 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
 {
     private readonly SubscriptionRepository _repository = subscriptionRepository;
 
+    /// <summary>
+    /// Creates or updates a subscription form on the HomeController Index Action, depending on whether it exists in the database or not.
+    /// </summary>
+    /// <param name="subscription">The email and subscription preferences for creating or updating the SubscriptionEntity.</param>
+    /// <returns>A responseResult with a custom http statuscode and the created or updated SubscriptionEntity. Null if there was an error.</returns>
     public async Task<ResponseResult> CreateOrUpdateSubscriptionAsync(SubscriptionEntity subscription)
     {
         try
@@ -40,6 +45,11 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
         return null!;     
     }
 
+    /// <summary>
+    /// Gets on SubscriptionEntity from the database.
+    /// </summary>
+    /// <param name="Id">The Id of the SubscriptionEntity to get.</param>
+    /// <returns>The corresponding SubscriptionEntity or null if none corresponds.</returns>
     public async Task<SubscriptionEntity> GetOneSubscriptionsAsync(string Id)
     {
         try
@@ -54,12 +64,16 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
         return null!;
     }
 
+    /// <summary>
+    /// Gets all SubscriptionEntities from the database.
+    /// </summary>
+    /// <returns>List of all SubscriptionEntities, or null if none.</returns>
     public async Task<IEnumerable<SubscriptionEntity>> GetAllSubscriptionsAsyncAsync()
     {
         try
         {
             var existingSubscriptions = await _repository.GetAllAsync();
-            if (existingSubscriptions.Count() >= 1)
+            if (existingSubscriptions.Count() > 0)
             {
                 return existingSubscriptions;
             }
@@ -68,6 +82,11 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
         return null!;
     }
 
+    /// <summary>
+    /// Updates a SubscriptionEntity in the database.
+    /// </summary>
+    /// <param name="subscription">The updated SubscriptionEntity.</param>
+    /// <returns>The updated SubscriptionEntity.</returns>
     public async Task<ResponseResult> UpdateSubscriptionAsync(SubscriptionEntity subscription)
     {
         try
@@ -93,6 +112,11 @@ public class SubscriptionService(SubscriptionRepository subscriptionRepository)
         return null!;
     }
 
+    /// <summary>
+    /// Deletes a SubscriptionEntity from the database.
+    /// </summary>
+    /// <param name="Id">The Id of the SubscriptionEntity to be deleted.</param>
+    /// <returns>A custom reponse result with the appropriate statuscode and the object itself if it was deleted, else null.</returns>
     public async Task<ResponseResult> DeleteSubscriptionAsync(string Id)
     {
         try

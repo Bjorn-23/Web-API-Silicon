@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Entities;
 using Infrastructure.Models;
+using System.Diagnostics;
 
 namespace Infrastructure.Factories;
 
@@ -15,7 +16,7 @@ public class CategoryFactory
                 CategoryName = model.CategoryName,
             };
         }
-        catch { }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
         return null!;
     }
 
@@ -29,7 +30,7 @@ public class CategoryFactory
                 CategoryName = entity.CategoryName,
             };
         }
-        catch { }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
         return null!;
     }
 
@@ -46,9 +47,8 @@ public class CategoryFactory
 
             return models;
         }
-        catch { }
-        return models!;
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;
     }
-
 
 }

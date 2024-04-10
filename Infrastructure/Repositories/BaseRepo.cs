@@ -4,7 +4,6 @@ using Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 
 
-
 namespace Infrastructure.Repositories
 {
     public abstract class BaseRepo<TEntity, TContext> where TEntity : class where TContext : DbContext
@@ -16,8 +15,7 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-
-
+        #region CREATE
         public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
             try
@@ -31,7 +29,9 @@ namespace Infrastructure.Repositories
             return null!;
 
         }
+        #endregion
 
+        #region READ
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             try
@@ -47,7 +47,16 @@ namespace Infrastructure.Repositories
             return null!;
         }
 
-        public virtual async Task<CourseResult> GetAllAsync(string str, string search, int pageNumber, int pageSize)
+
+        /// <summary>
+        /// Used for filtering courses and pagination on /courses.
+        /// </summary>
+        /// <param name="category">the category to filter from</param>
+        /// <param name="searchQuery">the string to filter search from</param>
+        /// <param name="pageNumber">the current pagenumber</param>
+        /// <param name="pageSize">the number of courses per page</param>
+        /// <returns></returns>
+        public virtual async Task<CourseResult> GetAllAsync(string category, string searchQuery, int pageNumber, int pageSize)
         {
             try
             {
@@ -61,6 +70,7 @@ namespace Infrastructure.Repositories
 
             return null!;
         }
+
 
         public virtual async Task<IEnumerable<TEntity>> GetAllWithPredicateAsync(Expression<Func<TEntity, bool>> predicate)
         {
@@ -77,6 +87,7 @@ namespace Infrastructure.Repositories
             return null!;
         }
 
+
         public virtual async Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> predicate)
         {
             try
@@ -91,7 +102,9 @@ namespace Infrastructure.Repositories
 
             return null!;
         }
+        #endregion
 
+        #region UPDATE
         public virtual async Task<TEntity> UpdateAsync(TEntity existingEntity, TEntity updatedEntity)
         {
             try
@@ -104,6 +117,7 @@ namespace Infrastructure.Repositories
 
             return null!;
         }
+
 
         public virtual async Task<TEntity> UpdateAsync(Expression<Func<TEntity, bool>> predicate, TEntity entity)
         {
@@ -124,7 +138,9 @@ namespace Infrastructure.Repositories
 
             return null!;
         }
+        #endregion
 
+        #region DELETE
         public virtual async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
             try
@@ -143,6 +159,7 @@ namespace Infrastructure.Repositories
             return false;
         }
 
+
         public virtual async Task<bool> DeleteAsync(TEntity entity)
         {
             try
@@ -155,6 +172,7 @@ namespace Infrastructure.Repositories
 
             return false;
         }
+        #endregion
 
         public virtual async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
         {

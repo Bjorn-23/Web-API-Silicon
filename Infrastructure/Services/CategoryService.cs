@@ -12,6 +12,10 @@ public class CategoryService(CategoryRepository repository)
 {
     private readonly CategoryRepository _repository = repository;
 
+    /// <summary>
+    /// Gets all categories asynchronusly from database.
+    /// </summary>
+    /// <returns>List of CategoryModel</returns>
     public async Task<IEnumerable<CategoryModel>> GetAllCategoriesAsync()
     {
         try
@@ -23,6 +27,11 @@ public class CategoryService(CategoryRepository repository)
         return null!;
     }
 
+    /// <summary>
+    /// Gets a single category from databse.
+    /// </summary>
+    /// <param name="categoryName">The name of the category to get.</param>
+    /// <returns>a single CategoryModel</returns>
     public async Task<CategoryModel> GetOneCategoryAsync(string categoryName)
     {
         try
