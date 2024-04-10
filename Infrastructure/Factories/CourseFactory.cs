@@ -8,50 +8,56 @@ public class CourseFactory
 {
     public static CourseEntity Create(CreateCourseDto dto)
     {
-        CourseEntity entity = new()
+        try
         {
-            Title = dto.Title,
-            Author = dto.Author,
-            ImageUrl = dto.ImageUrl,
-            AltText = dto.AltText,
-            BestSeller = dto.BestSeller,
-            Currency = dto.Currency,
-            Price = dto.Price,
-            DiscountPrice = dto.DiscountPrice,
-            LengthInHours = dto.LengthInHours,
-            Rating = dto.Rating,
-            CategoryId = dto.CategoryId,
-        };
-        
-        return entity;
+            return new CourseEntity
+            {
+                Title = dto.Title,
+                Author = dto.Author,
+                ImageUrl = dto.ImageUrl,
+                AltText = dto.AltText,
+                BestSeller = dto.BestSeller,
+                Currency = dto.Currency,
+                Price = dto.Price,
+                DiscountPrice = dto.DiscountPrice,
+                LengthInHours = dto.LengthInHours,
+                Rating = dto.Rating,
+                CategoryId = dto.CategoryId,
+            };
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;
     }
 
     public static CourseEntity Create(ReturnCourseDto dto)
     {
-        CourseEntity entity = new()
+        try
         {
-            Id = dto.Id,
-            Title = dto.Title,
-            Author = dto.Author,
-            ImageUrl = dto.ImageUrl,
-            AltText = dto.AltText,
-            BestSeller = dto.BestSeller,
-            Currency = dto.Currency,
-            Price = dto.Price,
-            DiscountPrice = dto.DiscountPrice,
-            LengthInHours = dto.LengthInHours,
-            Rating = dto.Rating,
-            CategoryId = dto.CategoryId,
-        };
-
-        return entity;
+            return new CourseEntity
+            {
+                Id = dto.Id,
+                Title = dto.Title,
+                Author = dto.Author,
+                ImageUrl = dto.ImageUrl,
+                AltText = dto.AltText,
+                BestSeller = dto.BestSeller,
+                Currency = dto.Currency,
+                Price = dto.Price,
+                DiscountPrice = dto.DiscountPrice,
+                LengthInHours = dto.LengthInHours,
+                Rating = dto.Rating,
+                CategoryId = dto.CategoryId,
+            };
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;
     }
 
     public static ReturnCourseDto Create(CourseEntity entity)
     {
         try
         {
-            ReturnCourseDto dto = new()
+            return new ReturnCourseDto
             {
                 Id = entity.Id,
                 Title = entity.Title,
@@ -67,8 +73,6 @@ public class CourseFactory
                 CategoryId = entity.CategoryId,
                 Category = entity.Category == null ? "" : entity.Category!.CategoryName
             };
-
-            return dto;
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message);  }
         return null!;
@@ -76,14 +80,19 @@ public class CourseFactory
 
     public static IEnumerable<ReturnCourseDto> Create(IEnumerable<CourseEntity> entities)
     {
-        List<ReturnCourseDto> dtos = [];
-
-        foreach (var entity in entities)
+        try
         {
-            dtos.Add(Create(entity));
+            List<ReturnCourseDto> dtos = [];
+
+            foreach (var entity in entities)
+            {
+                dtos.Add(Create(entity));
+            }
+
+            return dtos;
         }
-        
-        return dtos;
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;
     }
 
 }

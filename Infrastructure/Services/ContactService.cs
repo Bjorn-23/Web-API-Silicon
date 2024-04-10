@@ -10,6 +10,11 @@ public class ContactService(ContactRepository repository)
 {
     private readonly ContactRepository _repository = repository;
 
+    /// <summary>
+    /// Sends data to repository to create a new contact message in database.
+    /// </summary>
+    /// <param name="entity">The contact message to be created.</param>
+    /// <returns>A custom reponseresult with http statuscode and the created contact message</returns>
     public async Task<ResponseResult> CreateContactAsync(ContactEntity entity)
     {
         try
@@ -25,6 +30,11 @@ public class ContactService(ContactRepository repository)
 
     }
 
+    /// <summary>
+    /// Gets one contact message from the database.
+    /// </summary>
+    /// <param name="email">The email of the contact messages to look for</param>
+    /// <returns>List of the corresponding contact messages or null.</returns>
     public async Task<IEnumerable<ContactEntity>> GetContactByEmailAsync(string email)
     {
         try
@@ -40,6 +50,11 @@ public class ContactService(ContactRepository repository)
 
     }
 
+    /// <summary>
+    /// Get one contact message from the database.
+    /// </summary>
+    /// <param name="id">The Id of the contact message to look for.</param>
+    /// <returns>The corresponding contact message or null.</returns>
     public async Task<ContactEntity> GetContactByIdAsync(string id)
     {
         try
@@ -55,6 +70,10 @@ public class ContactService(ContactRepository repository)
 
     }
 
+    /// <summary>
+    /// Get all contact messages from database.
+    /// </summary>
+    /// <returns>All contact messages in database or null if there are less than one.</returns>
     public async Task<IEnumerable<ContactEntity>> GetAllContactsAsync()
     {
         try
@@ -70,6 +89,11 @@ public class ContactService(ContactRepository repository)
 
     }
 
+    /// <summary>
+    /// Updates a contact message in the database. For admin purposes only.
+    /// </summary>
+    /// <param name="updatedEntity"></param>
+    /// <returns></returns>
     public async Task<ResponseResult> UpdateContactAsync(ContactEntity updatedEntity)
     {
         try
@@ -88,6 +112,11 @@ public class ContactService(ContactRepository repository)
         return null!;
     }
 
+    /// <summary>
+    /// Deletes one contact message in the database.
+    /// </summary>
+    /// <param name="Id">Id of the contact message to be deleted</param>
+    /// <returns>The deleted contact message</returns>
     public async Task<ResponseResult> DeleteContactAsync(string Id)
     {
         try

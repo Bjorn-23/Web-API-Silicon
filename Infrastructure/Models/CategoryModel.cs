@@ -1,6 +1,4 @@
-﻿using Infrastructure.Entities;
-
-namespace Infrastructure.Models;
+﻿namespace Infrastructure.Models;
 
 public class CategoryModel
 {

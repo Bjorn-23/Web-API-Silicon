@@ -2,7 +2,6 @@
 
 namespace Infrastructure.Models;
 
-
 public class ReturnCourseDto
 {
     [Required]

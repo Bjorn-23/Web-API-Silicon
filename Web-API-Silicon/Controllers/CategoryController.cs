@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Web_API_Silicon.Filters;
@@ -12,6 +11,8 @@ namespace Web_API_Silicon.Controllers
     public class CategoryController(CategoryService categoryService) : ControllerBase
     {
         private readonly CategoryService _categoryService = categoryService;
+
+        #region READ
 
         [HttpGet]
         public async Task<IActionResult> GetAll(string category = "")
@@ -50,5 +51,6 @@ namespace Web_API_Silicon.Controllers
             }
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
+        #endregion
     }
 }

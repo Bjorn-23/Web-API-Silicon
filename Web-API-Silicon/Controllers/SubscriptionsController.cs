@@ -12,7 +12,6 @@ namespace Web_API_Silicon.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [UseApiKey]
-    //[Authorize]
     public class SubscriptionsController(SubscriptionService subscriptionService, StatusCodeSelector statusCode) : ControllerBase
     {
         private readonly SubscriptionService _subscriptionService = subscriptionService;

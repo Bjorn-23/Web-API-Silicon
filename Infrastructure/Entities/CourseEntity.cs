@@ -4,8 +4,9 @@ namespace Infrastructure.Entities;
 
 public class CourseEntity
 {
+    [Key]
+    [Required]
     public string Id { get; set; } = Guid.NewGuid().ToString();
-
 
     [Required]
     public string Title { get; set; } = null!;

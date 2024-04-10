@@ -13,6 +13,7 @@ public class CategoryRepository(DataContext context) : BaseRepo<CategoryEntity, 
     {        
         try
         {
+            // Order categories in ascending or from a-z.
             var result = await _context.Categories.OrderBy(c => c.CategoryName).ToListAsync();
             if (result != null)
             {

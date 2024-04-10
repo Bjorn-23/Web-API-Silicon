@@ -12,6 +12,11 @@ public class AuthController(IConfiguration configuration) : ControllerBase
 {
     private readonly IConfiguration _configuration = configuration;
 
+    #region READ
+    /// <summary>
+    /// Generates JWT for admin in web app.
+    /// </summary>
+    /// <returns>JSON Web Token</returns>
     [UseApiKey]
     [HttpPost]
     public IActionResult GetToken()
@@ -31,6 +36,6 @@ public class AuthController(IConfiguration configuration) : ControllerBase
             return Ok(tokenHandler.WriteToken(token));
         }
         catch (Exception ex) { return Unauthorized(ex.Message); }
-
     }
+    #endregion
 }

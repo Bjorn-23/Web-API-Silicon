@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Entities;
 using Infrastructure.Models;
+using System.Diagnostics;
 
 
 namespace Infrastructure.Factories;
@@ -8,58 +9,78 @@ public static class SubscriptionFactory
 {
     public static SubscriptionEntity Create(SubscriptionCreateModel model)
     {
-        return new SubscriptionEntity()
+        try
         {
-            Email = model.Email,
-            DailyNewsletter = model.DailyNewsletter,
-            AdvertisingUpdates = model.AdvertisingUpdates,
-            WeekInReview = model.WeekInReview,
-            EventUpdates = model.EventUpdates,
-            StartupsWeekly = model.StartupsWeekly,
-            Podcasts = model.Podcasts,
-        };
+            return new SubscriptionEntity()
+            {
+                Email = model.Email,
+                DailyNewsletter = model.DailyNewsletter,
+                AdvertisingUpdates = model.AdvertisingUpdates,
+                WeekInReview = model.WeekInReview,
+                EventUpdates = model.EventUpdates,
+                StartupsWeekly = model.StartupsWeekly,
+                Podcasts = model.Podcasts,
+            };
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;
+
     }
 
     public static SubscriptionEntity Create(SubscriptionReturnModel model)
     {
-        return new SubscriptionEntity()
+        try
         {
-            Id = model.Id,
-            Email = model.Email,
-            DailyNewsletter = model.DailyNewsletter,
-            AdvertisingUpdates = model.AdvertisingUpdates,
-            WeekInReview = model.WeekInReview,
-            EventUpdates = model.EventUpdates,
-            StartupsWeekly = model.StartupsWeekly,
-            Podcasts = model.Podcasts,
-        };
+            return new SubscriptionEntity()
+            {
+                Id = model.Id,
+                Email = model.Email,
+                DailyNewsletter = model.DailyNewsletter,
+                AdvertisingUpdates = model.AdvertisingUpdates,
+                WeekInReview = model.WeekInReview,
+                EventUpdates = model.EventUpdates,
+                StartupsWeekly = model.StartupsWeekly,
+                Podcasts = model.Podcasts,
+            };
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!; 
     }
 
     public static SubscriptionReturnModel Create(SubscriptionEntity entity)
     {
-        return new SubscriptionReturnModel()
+        try
         {
-            Id = entity.Id,
-            Email = entity.Email,
-            DailyNewsletter = entity.DailyNewsletter,
-            AdvertisingUpdates = entity.AdvertisingUpdates,
-            WeekInReview = entity.WeekInReview,
-            EventUpdates = entity.EventUpdates,
-            StartupsWeekly = entity.StartupsWeekly,
-            Podcasts = entity.Podcasts,
-        };
+            return new SubscriptionReturnModel()
+            {
+                Id = entity.Id,
+                Email = entity.Email,
+                DailyNewsletter = entity.DailyNewsletter,
+                AdvertisingUpdates = entity.AdvertisingUpdates,
+                WeekInReview = entity.WeekInReview,
+                EventUpdates = entity.EventUpdates,
+                StartupsWeekly = entity.StartupsWeekly,
+                Podcasts = entity.Podcasts,
+            };
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;
     }
 
     public static IEnumerable<SubscriptionReturnModel> Create(IEnumerable<SubscriptionEntity> entitites)
     {
-        var models = new List<SubscriptionReturnModel>();
-        
-        foreach (var entity in entitites)
+        try
         {
-            models.Add(Create(entity));
-        }
+            var models = new List<SubscriptionReturnModel>();
 
-        return models;
-        
+            foreach (var entity in entitites)
+            {
+                models.Add(Create(entity));
+            }
+
+            return models;
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;
     }
 }

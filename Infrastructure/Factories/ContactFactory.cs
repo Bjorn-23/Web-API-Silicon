@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Entities;
 using Infrastructure.Models;
+using System.Diagnostics;
 
 namespace Infrastructure.Factories;
 
@@ -7,55 +8,70 @@ public class ContactFactory
 {
     public static ContactEntity Create(CreateContactDto dto)
     {
-        ContactEntity entity = new()
+        try
         {
-            FullName = dto.FullName,
-            Email = dto.Email,
-            Message = dto.Message,
-            Services = dto.Services,
-        };
+            return new ContactEntity
+            {
+                FullName = dto.FullName,
+                Email = dto.Email,
+                Message = dto.Message,
+                Services = dto.Services,
+            };
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;
 
-        return entity;
     }
 
     public static ContactEntity Create(ReturnContactDto dto)
     {
-        ContactEntity entity = new()
+        try
         {
-            Id = dto.Id,
-            FullName = dto.FullName,
-            Email = dto.Email,
-            Message = dto.Message,
-            Services = dto.Services,
-        };
-
-        return entity;
+            return new ContactEntity
+            {
+                Id = dto.Id,
+                FullName = dto.FullName,
+                Email = dto.Email,
+                Message = dto.Message,
+                Services = dto.Services,
+            };
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;
     }
 
     public static ReturnContactDto Create(ContactEntity entity)
     {
-        ReturnContactDto dto = new()
+        try
         {
-            Id = entity.Id,
-            FullName = entity.FullName,
-            Email = entity.Email,
-            Message = entity.Message,
-            Services = entity.Services,
-        };
-
-        return dto;
+            return new ReturnContactDto
+            {
+                Id = entity.Id,
+                FullName = entity.FullName,
+                Email = entity.Email,
+                Message = entity.Message,
+                Services = entity.Services,
+            };
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;
     }
 
     public static IEnumerable<ReturnContactDto> Create(IEnumerable<ContactEntity> entities)
     {
-        List<ReturnContactDto> dtos = [];
-
-        foreach (var entity in entities)
+        try
         {
-            dtos.Add(Create(entity));
-        }
+            List<ReturnContactDto> dtos = [];
 
-        return dtos;
+            foreach (var entity in entities)
+            {
+                dtos.Add(Create(entity));
+            }
+
+            return dtos;
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;
     }
 
 }

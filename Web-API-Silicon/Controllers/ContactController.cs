@@ -15,7 +15,8 @@ public class ContactController(ContactService contactService, StatusCodeSelector
 {
     private readonly ContactService _contactService = contactService;
     private readonly StatusCodeSelector _statusCode = statusCode;
-    
+
+    #region CREATE
     [HttpPost]
     public async Task<IActionResult> CreateContactForm(CreateContactDto dto)
     {
@@ -34,7 +35,9 @@ public class ContactController(ContactService contactService, StatusCodeSelector
 
         return BadRequest();
     }
+    #endregion
 
+    #region READ
     [HttpGet]
     public async Task<IActionResult> GetAllContactForms()
     {
@@ -56,6 +59,7 @@ public class ContactController(ContactService contactService, StatusCodeSelector
         return BadRequest();
     }
 
+
     [HttpGet("{Id}")]
     public async Task<IActionResult> GetOneContactForm(string Id)
     {
@@ -76,8 +80,9 @@ public class ContactController(ContactService contactService, StatusCodeSelector
 
         return BadRequest();
     }
+    #endregion
 
-
+    #region UPDATE
     [HttpPut]
     public async Task<IActionResult> UpdateContact(ReturnContactDto dto)
     {
@@ -98,7 +103,9 @@ public class ContactController(ContactService contactService, StatusCodeSelector
 
         return BadRequest();
     }
+    #endregion
 
+    #region DELETE
     [HttpDelete("{Id}")]
     public async Task<IActionResult> DeleteContact(string Id)
     {
@@ -119,4 +126,5 @@ public class ContactController(ContactService contactService, StatusCodeSelector
 
         return BadRequest();
     }
+    #endregion
 }
