@@ -22,6 +22,8 @@ public class CourseFactory
                 DiscountPrice = dto.DiscountPrice,
                 LengthInHours = dto.LengthInHours,
                 Rating = dto.Rating,
+                NumberOfReviews = dto.NumberOfReviews,
+                NumberOfLikes = dto.NumberOfLikes,
                 CategoryId = dto.CategoryId,
             };
         }
@@ -46,6 +48,8 @@ public class CourseFactory
                 DiscountPrice = dto.DiscountPrice,
                 LengthInHours = dto.LengthInHours,
                 Rating = dto.Rating,
+                NumberOfReviews = dto.NumberOfReviews,
+                NumberOfLikes = dto.NumberOfLikes,
                 CategoryId = dto.CategoryId,
             };
         }
@@ -70,6 +74,8 @@ public class CourseFactory
                 DiscountPrice = entity.DiscountPrice,
                 LengthInHours = entity.LengthInHours,
                 Rating = entity.Rating,
+                NumberOfReviews = entity.NumberOfReviews,
+                NumberOfLikes = entity.NumberOfLikes,
                 CategoryId = entity.CategoryId,
                 Category = entity.Category == null ? "" : entity.Category!.CategoryName
             };
