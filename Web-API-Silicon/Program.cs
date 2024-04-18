@@ -1,4 +1,3 @@
-using Infrastructure.Context;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Web_API_Silicon.Configurations;
@@ -28,7 +27,8 @@ builder.Services.AddScoped<ContactService>();
 builder.Services.AddScoped<CategoryRepository>();
 builder.Services.AddScoped<CategoryService>();
 
-
+//--------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------
 
 var app = builder.Build();
 
