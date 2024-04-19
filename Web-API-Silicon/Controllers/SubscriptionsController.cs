@@ -4,6 +4,7 @@ using Infrastructure.Factories;
 using Infrastructure.Models;
 using Web_API_Silicon.Filters;
 using Web_API_Silicon.Helpers;
+using System.Diagnostics;
 
 
 
@@ -21,19 +22,24 @@ namespace Web_API_Silicon.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateOrUpdate(SubscriptionCreateModel subscriber)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (subscriber != null)
+                if (ModelState.IsValid)
                 {
-                    var result = await _subscriptionService.CreateOrUpdateSubscriptionAsync(SubscriptionFactory.Create(subscriber));
-                    if (result.StatusCode != null)
+                    if (subscriber != null)
                     {
-                        return _statusCode.StatusSelector(result);                        
+                        var result = await _subscriptionService.CreateOrUpdateSubscriptionAsync(SubscriptionFactory.Create(subscriber));
+                        if (result.StatusCode != null)
+                        {
+                            return _statusCode.StatusSelector(result);                        
+                        }
                     }
                 }
-            }
 
-            return BadRequest();
+                return BadRequest();
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         #endregion
@@ -42,32 +48,41 @@ namespace Web_API_Silicon.Controllers
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetOne(string Id)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var result = await _subscriptionService.GetOneSubscriptionsAsync(Id);
-                if (result != null)
+                if (ModelState.IsValid)
                 {
-                    return Ok(SubscriptionFactory.Create(result));
+                    var result = await _subscriptionService.GetOneSubscriptionsAsync(Id);
+                    if (result != null)
+                    {
+                        return Ok(SubscriptionFactory.Create(result));
+                    }
                 }
-            }
 
-            return BadRequest();
+                return BadRequest();
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            if (ModelState.IsValid)
+            try
             {
-                var result = await _subscriptionService.GetAllSubscriptionsAsyncAsync();
-                if (result != null)
+                if (ModelState.IsValid)
                 {
+                    var result = await _subscriptionService.GetAllSubscriptionsAsyncAsync();
+                    if (result != null)
+                    {
 
-                    return Ok(SubscriptionFactory.Create(result));
+                        return Ok(SubscriptionFactory.Create(result));
+                    }
                 }
             }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
+            return StatusCode(StatusCodes.Status500InternalServerError);
 
-            return BadRequest();
         }
 
         #endregion
@@ -76,17 +91,22 @@ namespace Web_API_Silicon.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(SubscriptionReturnModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var subscriber = SubscriptionFactory.Create(model);
-                var result = await _subscriptionService.UpdateSubscriptionAsync(subscriber);
-                if (result.StatusCode != null)
+                if (ModelState.IsValid)
                 {
-                    return _statusCode.StatusSelector(result);
+                    var subscriber = SubscriptionFactory.Create(model);
+                    var result = await _subscriptionService.UpdateSubscriptionAsync(subscriber);
+                    if (result.StatusCode != null)
+                    {
+                        return _statusCode.StatusSelector(result);
+                    }
                 }
-            }
 
-            return BadRequest();
+                return BadRequest();
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
         #endregion
 
@@ -94,16 +114,21 @@ namespace Web_API_Silicon.Controllers
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(string Id)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var result = await _subscriptionService.DeleteSubscriptionAsync(Id);
-                if (result.StatusCode != null)
+                if (ModelState.IsValid)
                 {
-                    return _statusCode.StatusSelector(result);
+                    var result = await _subscriptionService.DeleteSubscriptionAsync(Id);
+                    if (result.StatusCode != null)
+                    {
+                        return _statusCode.StatusSelector(result);
+                    }
                 }
-            }
 
-            return BadRequest();
+                return BadRequest();
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
         #endregion
     }

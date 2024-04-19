@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Web_API_Silicon.Filters;
@@ -23,19 +24,25 @@ public class AuthController(IConfiguration configuration) : ControllerBase
     {
         try
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenDescriptor = new SecurityTokenDescriptor
+            if(ModelState.IsValid)
             {
-                Issuer = _configuration["Jwt:Issuer"],
-                Audience = _configuration["Jwt:Audience"],
-                Expires = DateTime.Now.AddMinutes(15),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]!)), SecurityAlgorithms.HmacSha512),
-            };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Issuer = _configuration["Jwt:Issuer"],
+                    Audience = _configuration["Jwt:Audience"],
+                    Expires = DateTime.Now.AddMinutes(15),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]!)), SecurityAlgorithms.HmacSha512),
+                };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return Ok(tokenHandler.WriteToken(token));
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                return Ok(tokenHandler.WriteToken(token));
+            }
+
+            return Unauthorized();
         }
-        catch (Exception ex) { return Unauthorized(ex.Message); }
+        catch (Exception ex) {Debug.WriteLine(ex.Message); }
+        return StatusCode(StatusCodes.Status500InternalServerError);
     }
     #endregion
 }

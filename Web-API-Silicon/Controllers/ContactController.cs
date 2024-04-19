@@ -20,20 +20,21 @@ public class ContactController(ContactService contactService, StatusCodeSelector
     [HttpPost]
     public async Task<IActionResult> CreateContactForm(CreateContactDto dto)
     {
-        if (ModelState.IsValid)
+        try
         {
-            try
+            if (ModelState.IsValid)
             {
-                var result = await _contactService.CreateContactAsync(ContactFactory.Create(dto));
-                if (result != null)
-                {
-                    return _statusCode.StatusSelector(result);
-                }
+                    var result = await _contactService.CreateContactAsync(ContactFactory.Create(dto));
+                    if (result != null)
+                    {
+                        return _statusCode.StatusSelector(result);
+                    }
             }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
-        }
 
-        return BadRequest();
+            return BadRequest();
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return StatusCode(StatusCodes.Status500InternalServerError);
     }
     #endregion
 
@@ -41,44 +42,46 @@ public class ContactController(ContactService contactService, StatusCodeSelector
     [HttpGet]
     public async Task<IActionResult> GetAllContactForms()
     {
-        if (ModelState.IsValid)
+        try
         {
-            try
+            if (ModelState.IsValid)
             {
-                var result = await _contactService.GetAllContactsAsync();
-                if (result != null)
-                {
-                    return Ok(ContactFactory.Create(result));
-                }
+                    var result = await _contactService.GetAllContactsAsync();
+                    if (result != null)
+                    {
+                        return Ok(ContactFactory.Create(result));
+                    }
 
-                return NotFound();
+                    return NotFound();
             }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
-        }
 
-        return BadRequest();
+            return BadRequest();
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return StatusCode(StatusCodes.Status500InternalServerError);
     }
 
 
     [HttpGet("{Id}")]
     public async Task<IActionResult> GetOneContactForm(string Id)
     {
-        if (ModelState.IsValid)
+        try
         {
-            try
+            if (ModelState.IsValid)
             {
-                var result = await _contactService.GetContactByIdAsync(Id);
-                if (result != null)
-                {
-                    return Ok(ContactFactory.Create(result));
-                }
+                    var result = await _contactService.GetContactByIdAsync(Id);
+                    if (result != null)
+                    {
+                        return Ok(ContactFactory.Create(result));
+                    }
 
-                return NotFound();
+                    return NotFound();
             }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
-        }
 
-        return BadRequest();
+            return BadRequest();
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return StatusCode(StatusCodes.Status500InternalServerError);
     }
     #endregion
 
@@ -86,22 +89,23 @@ public class ContactController(ContactService contactService, StatusCodeSelector
     [HttpPut]
     public async Task<IActionResult> UpdateContact(ReturnContactDto dto)
     {
-        if (ModelState.IsValid)
+        try
         {
-            try
+            if (ModelState.IsValid)
             {
-                var result = await _contactService.UpdateContactAsync(ContactFactory.Create(dto));
-                if (result != null)
-                {
-                    return _statusCode.StatusSelector(result);
-                }
+                    var result = await _contactService.UpdateContactAsync(ContactFactory.Create(dto));
+                    if (result != null)
+                    {
+                        return _statusCode.StatusSelector(result);
+                    }
                 
-                return NotFound();
+                    return NotFound();
             }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
-        }
 
-        return BadRequest();
+            return BadRequest();
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return StatusCode(StatusCodes.Status500InternalServerError);
     }
     #endregion
 
@@ -109,22 +113,23 @@ public class ContactController(ContactService contactService, StatusCodeSelector
     [HttpDelete("{Id}")]
     public async Task<IActionResult> DeleteContact(string Id)
     {
-        if (ModelState.IsValid)
+        try
         {
-            try
+            if (ModelState.IsValid)
             {
-                var result = await _contactService.DeleteContactAsync(Id);
-                if (result != null)
-                {
-                    return _statusCode.StatusSelector(result);
-                }
+                    var result = await _contactService.DeleteContactAsync(Id);
+                    if (result != null)
+                    {
+                        return _statusCode.StatusSelector(result);
+                    }
 
-                return NotFound();
+                    return NotFound();
             }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
-        }
 
-        return BadRequest();
+            return BadRequest();
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return StatusCode(StatusCodes.Status500InternalServerError);
     }
     #endregion
 }

@@ -17,38 +17,40 @@ namespace Web_API_Silicon.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll(string category = "")
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (ModelState.IsValid)
                 {
                     var result = await _categoryService.GetAllCategoriesAsync();
                     if (result != null)
                     {
                         return Ok(result);
                     }
-                }
-                catch (Exception ex) { Debug.WriteLine(ex.Message); }
 
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpGet("{categoryName}")]
         public async Task<IActionResult> Get(string categoryName)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (ModelState.IsValid)
                 {
                     var result = await _categoryService.GetOneCategoryAsync(categoryName);
                     if (result != null)
                     {
                         return Ok(result);
                     }
-                }
-                catch (Exception ex) { Debug.WriteLine(ex.Message); }
 
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
         #endregion

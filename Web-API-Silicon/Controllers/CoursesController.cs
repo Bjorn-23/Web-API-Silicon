@@ -21,9 +21,9 @@ public class CoursesController(CourseService coursesService) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreateCourseDto model)
     {
-        if (ModelState.IsValid)
+        try
         {
-            try
+            if (ModelState.IsValid)
             {
                 if (model != null)
                 {
@@ -35,10 +35,11 @@ public class CoursesController(CourseService coursesService) : ControllerBase
                     // else if result.statuscode == badrequest return badrequest
                 }
             }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
-        }
 
-        return BadRequest(model);
+            return BadRequest(model);
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return StatusCode(StatusCodes.Status500InternalServerError);
     }
 
     #endregion
@@ -48,9 +49,9 @@ public class CoursesController(CourseService coursesService) : ControllerBase
     [HttpGet("{Id}")]
     public async Task<IActionResult> Get(string Id)
     {
-        if (ModelState.IsValid)
+        try
         {
-            try
+            if (ModelState.IsValid)
             {
                 var courses = await _coursesService.GetCourseAsync(Id);
                 if (courses != null)
@@ -60,19 +61,21 @@ public class CoursesController(CourseService coursesService) : ControllerBase
 
                 return NotFound();
             }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
-    }
 
-        return BadRequest();
+            return BadRequest();
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return StatusCode(StatusCodes.Status500InternalServerError);
+
     }
 
 
     [HttpGet]
     public async Task<IActionResult> GetAll(string? category = "", string? searchQuery = "", int pageNumber = 1, int pageSize = 9)
     {
-        if (ModelState.IsValid)
+        try
         {
-            try
+            if (ModelState.IsValid)
             {
                 var courses = await _coursesService.GetAllCoursesAsync(category, searchQuery, pageNumber, pageSize);
                 if (courses != null)
@@ -82,12 +85,10 @@ public class CoursesController(CourseService coursesService) : ControllerBase
 
                 return NotFound();
             }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
-
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
         return StatusCode(StatusCodes.Status500InternalServerError);
     }
-
 
     #endregion
 
@@ -97,9 +98,9 @@ public class CoursesController(CourseService coursesService) : ControllerBase
     [HttpPut]
     public async Task<IActionResult> Update(ReturnCourseDto dto)
     {
-        if (ModelState.IsValid)
+        try
         {
-            try
+            if (ModelState.IsValid)
             {
                 if (dto != null)
                 {
@@ -111,10 +112,11 @@ public class CoursesController(CourseService coursesService) : ControllerBase
                     }
                 }
             }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
-        }
 
-        return BadRequest();
+            return BadRequest();
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return StatusCode(StatusCodes.Status500InternalServerError);
     }
 
     #endregion
@@ -124,9 +126,9 @@ public class CoursesController(CourseService coursesService) : ControllerBase
     [HttpDelete("{Id}")]
     public async Task<IActionResult> Delete(string Id)
     {
-        if (ModelState.IsValid)
+        try
         {
-            try
+            if (ModelState.IsValid)
             {
                 if (!string.IsNullOrWhiteSpace(Id))
                 {
@@ -137,10 +139,11 @@ public class CoursesController(CourseService coursesService) : ControllerBase
                     }
                 }
             }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
-        }
 
-        return BadRequest();
+            return BadRequest();
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return StatusCode(StatusCodes.Status500InternalServerError);
     }
 
     #endregion
